@@ -1,0 +1,102 @@
+{% extends 'authenticate/navbar.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login & Registration Form</title>
+  <!-- Load static template tags -->
+  {% load static %}
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <style>
+    body{
+      background-color: #e5613114;
+    }
+    .flex-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 50px;
+      background-color: transparent;
+    }
+
+    .login {
+      width: 45%;
+      background-color: #ffffff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      width: 45%;
+      text-align: center;
+    }
+
+    .logo img {
+      width: 600px; /* Adjust the size of the logo image */
+      max-width: 500px; /* Maximum width of the logo */
+    }
+    .btn-login {
+      padding: 10px 20px;
+      
+      font-size: 16px;
+      color: white;
+      background-color: #E56031;
+      border: #E56031 2px solid;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .btn-login:hover {
+      background-color: #d0582d;
+      color: white;
+      
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="flex-container">
+      <!-- Login Form Section -->
+      <div class="logo">
+        <img src="{% static 'images/applogo.png' %}" alt="Application Logo">
+      </div>
+      <div class="login form">
+        <header>Login</header>
+        <form action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
+          {% if form.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              Username or password are not valid...
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endif %}
+          <input type="text" name="username" placeholder="Enter your username" required>
+          <input type="password" name="password" placeholder="Enter your password" required>
+          <input type="submit" class="btn-login" value="Login">
+        </form>
+        <div class="signup">
+          <span class="signup">Don't have an account?
+            <a href="{% url 'register' %}">Signup</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- Logo Section -->
+      
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+{% endblock %}

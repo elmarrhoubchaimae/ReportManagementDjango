@@ -1,0 +1,114 @@
+{% extends 'authenticate/navbar.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Reports by Subject</title>
+    <style>
+        body {
+            background-color: #e5613114;
+        }
+
+        /* Centering the form and search results */
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 80px;
+            height: 50vh; /* Adjust height as needed */
+        }
+
+        /* Styling the form */
+        form {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 10px;
+            background-color: #E56031;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #d95e31;
+        }
+
+        /* Styling the search results */
+        .pdf-list {
+            margin-top: 20px;
+            width: 80%; /* Full width */
+        }
+
+        .pdf-item {
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .pdf-item:hover {
+            transform: scale(1.02); /* Slight scale on hover */
+        }
+
+        .pdf-item a {
+            text-decoration: none;
+            color: #316ae5;
+            font-weight: bold;
+        }
+
+        .pdf-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="center-container">
+        <h1>Search Reports by Subject</h1>
+
+        <!-- Search Form -->
+        <form method="GET" action="{% url 'search_by_sujet' %}">
+            <input type="text" name="sujet" placeholder="Enter subject to search" value="{{ query|default:'' }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Search Results -->
+        {% if query %}
+            <h2>Search Results for "{{ query }}"</h2>
+
+            {% if results %}
+                <ul class="pdf-list">
+                    {% for pdf in results %}
+                        <li class="pdf-item">
+                            <!-- Use file.url for linking and file.name for the display name -->
+                            <a href="{{ pdf.file.url }}">{{ pdf.file.name }}</a> - Uploaded by {{ pdf.user.username }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No reports found with this subject.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}

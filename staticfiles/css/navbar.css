@@ -1,0 +1,45 @@
+/* Navbar styles */
+.navbar {
+    background-color:transparent; /* Navbar background color */
+    padding: 10px; /* Navbar padding */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  }
+  
+  .navbar-brand {
+    padding-left: 50px; /* Padding left for the logo */
+  }
+  .logo {
+    height: 70px; /* Adjust as needed */
+    width: auto;
+}
+
+.nav-item {
+    margin: 0 15px; /* Space between navbar items */
+}
+  .navbar-nav {
+    display: flex;
+    padding-right: 50px; /* Padding left for the nav items */
+    justify-content: center; /* Center items horizontally */
+    width: 100%;
+  }
+  
+  .nav-link {
+    color: white !important; /* Text color for nav items */
+    transition: font-weight 0.3s ease, text-decoration 3s ease; /* Animation for color and underline */
+  }
+  
+  .nav-link:hover {
+    font-weight: bold !important; /* Hover color for nav items */
+    text-decoration: underline;/* Underline on hover */ 
+  }
+  
+  .animated-link {
+    position: relative;
+  }
+  
+
+  
+  .animated-link:hover::after {
+    width: 100%;
+  }
+  

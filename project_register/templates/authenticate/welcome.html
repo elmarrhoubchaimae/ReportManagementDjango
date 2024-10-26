@@ -1,0 +1,108 @@
+{% extends 'authenticate/navbar.html' %}
+{% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Background Image Full Screen</title>
+  <!-- Load static template tags -->
+  {% load static %}
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .bg {
+      background-image: url("{% static 'images/background.png' %}");
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      color: white;
+      font-size: 60px; /* Adjust size as needed */
+      font-weight: bold;
+      flex-direction: column; /* To stack elements vertically */
+    }
+    .text {
+        margin-top: -100px !important;
+    }
+    .smalltext {
+        font-size: 18px;
+        font-weight: normal;
+    }
+    .buttons {
+        
+        display: inline-block;
+
+    }
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px;
+        margin-top: 25px !important;
+        font-size: 16px;
+        color: white;
+        background-color: transparent;
+        border: white 2px solid;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: font-weight 1s ease,
+    }
+    .btn-login{
+        padding: 10px 20px;
+        margin: 10px;
+        margin-top: -50px !important;
+        font-size: 16px;
+        color: white;
+        background-color: #E56031;
+        border: #E56031 2px solid;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: normal;
+        
+      
+    }
+    .btn-login:hover {
+        background-color: #E56031;
+        border: #E56031 2px solid;
+        color: white;
+        padding: 13px 25px;
+        font-size: 18px;
+        text-decoration: none;
+        transition: font-weight 0.3s ease,
+    }
+    .btn:hover {
+        background-color: #E56031;
+        border: #E56031 2px solid;
+        color: white;
+        padding: 13px 25px;
+        font-size: 18px;
+        text-decoration: none;
+        transition: font-weight 0.3s ease,
+    }
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <div class="text">
+      Welcome to Our<br> Project <span style="color: #E56031;">Management</span> Platform!
+      <br>
+      <div class="smalltext">
+        "Stay connected and organized! Our platform enhances collaboration and streamlines project management for <span style="color: #b04937;">student</span> and <span style="color: #b04937;">teacher</span>."
+      </div>
+    </div>
+    <div class="buttons">
+      <a href="{% url 'register' %}" class="btn">Sign Up</a>
+      <a href="{% url 'login' %}" class="btn-login">Login</a>
+    </div>
+  </div>
+</body>
+</html>
+{% endblock %}

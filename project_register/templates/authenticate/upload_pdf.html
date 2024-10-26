@@ -1,0 +1,41 @@
+{% extends 'authenticate/navbar.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Upload PDF</title>
+  {% load static %}
+  <style>
+    .pdf-list {
+        margin-top: 20px;
+    }
+    .pdf-item {
+        margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Upload PDF</h2>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Upload</button>
+    </form>
+
+    <div class="pdf-list">
+      <h3>Your Uploaded PDFs</h3>
+      {% for pdf in pdfs %}
+        <div class="pdf-item">
+          <a href="{{ pdf.file.url }}">{{ pdf.file.name }}</a> - Uploaded on {{ pdf.upload_date }}
+          <p>Description: {{ pdf.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
+{% endblock %}

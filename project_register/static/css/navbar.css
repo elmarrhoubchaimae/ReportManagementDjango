@@ -1,0 +1,55 @@
+/* Background image */
+body {
+  background-image: url("{% static 'images/your-background-image.jpg' %}"); /* Replace with your image path */
+  background-size: cover; /* Cover the entire background */
+  background-position: center; /* Center the image */
+  position: relative; /* Needed for z-index */
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: rgb(255, 255, 255); /* Navbar background color */
+  padding: 0px; /* Navbar padding */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  position: relative; /* Ensure the navbar stays above the image */
+  z-index: 1000; /* Higher z-index to stay on top */
+}
+
+.navbar-brand {
+  padding-left: 80px; /* Padding left for the logo */
+}
+
+#logo {
+  height: 60px; /* Adjust as needed */
+  width: auto;
+}
+
+.nav-item {
+  margin: 0 20px; /* Space between navbar items */
+}
+
+.navbar-nav {
+  display: flex;
+  padding-right: 50px; /* Padding left for the nav items */
+  justify-content: center; /* Center items horizontally */
+  width: 100%;
+}
+
+.nav-link {
+  color: #043730 !important; /* Text color for nav items */
+  transition: font-weight 0.3s ease, text-decoration 2s ease;
+  font-weight: bold; /* Animation for color and underline */
+}
+
+.nav-link:hover {
+  font-weight: bolder !important; /* Hover color for nav items */
+  text-decoration: underline; /* Underline on hover */ 
+}
+
+.animated-link {
+  position: relative;
+}
+
+.animated-link:hover::after {
+  width: 100%;
+}

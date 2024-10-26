@@ -1,0 +1,74 @@
+
+
+{% extends 'authenticate/navbar.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home</title>
+  {% load static %}
+  <style>
+    .pdf-list {
+        margin-top: 20px;
+    }
+    .pdf-item {
+        margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {% if user.profile.user_type == 'student' %}
+      <h2>Upload PDF</h2>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+      </form>
+
+      <div class="pdf-list">
+        <h3>Your Uploaded PDFs</h3>
+        {% for pdf in pdfs %}
+          <div class="pdf-item">
+            <a href="{{ pdf.file.url }}">{{ pdf.file.name }}</a> - Uploaded on {{ pdf.upload_date }}
+            <p>Description: {{ pdf.description }}</p>
+            <form method="POST" action="{% url 'delete_pdf' pdf.id %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+
+    {% elif user.profile.user_type == 'professor' %}
+      <h2>Search Student by Username</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Enter student's username" required>
+        <button type="submit">Search</button>
+      </form>
+
+      {% if student %}
+        <h3>Uploaded PDFs for {{ student.username }}</h3>
+        <div class="pdf-list">
+          {% for pdf in pdfs %}
+            <div class="pdf-item">
+              <a href="{{ pdf.file.url }}">{{ pdf.file.name }}</a> - Uploaded on {{ pdf.upload_date }}<br>
+              <strong>Description:</strong> {{ pdf.description }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+  <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-secondary">Logout</button>
+</form>
+
+</body>
+</html>
+{% endblock %}

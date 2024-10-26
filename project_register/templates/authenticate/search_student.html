@@ -1,0 +1,53 @@
+{% extends 'authenticate/navbar.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Search Student</title>
+  {% load static %}
+  <style>
+    .pdf-list {
+        margin-top: 20px;
+    }
+    .pdf-item {
+        margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Search Student by Username</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Enter student's username" required>
+      <button type="submit">Search</button>
+    </form>
+
+    {% if student %}
+      <h3>Uploaded PDFs for {{ student.username }}</h3>
+      <div class="pdf-list">
+        {% for pdf in pdfs %}
+          <div class="pdf-item">
+            <a href="{{ pdf.file.url }}">{{ pdf.file.name }}</a> - Uploaded on {{ pdf.upload_date }}<br>
+            <strong>Description:</strong> {{ pdf.description }}<br>
+            <strong>Status:</strong> {{ pdf.status }}<br>
+
+            <form method="POST" action="{% url 'update_status' pdf.id %}">
+              {% csrf_token %}
+              <select name="status">
+                <option value="approved" {% if pdf.status == 'approved' %}selected{% endif %}>Approved</option>
+                <option value="needs modification" {% if pdf.status == 'needs modification' %}selected{% endif %}>Needs Modification</option>
+              </select>
+              <button type="submit">Update Status</button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
+{% endblock %}

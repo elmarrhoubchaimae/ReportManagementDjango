@@ -1,0 +1,196 @@
+{% extends 'authenticate/navbar.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Register</title>
+  <!-- Load static template tags -->
+  {% load static %}
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <style>
+    .flex-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      background-color: transparent;
+    }
+
+    .register {
+      width: 45%;
+      background-color: #ffffff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      width: 45%;
+      text-align: center;
+    }
+    body{
+      background-color: #e5613121;
+    }
+    .logo img {
+      width: 600px;
+      max-width: 500px;
+    }
+
+    .btn-register {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #E56031;
+      border: #E56031 2px solid;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .form input {
+  height: 60px;
+  width: 100%;
+  padding: 0 10px;
+  font-size: 17px;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+    .btn-register:hover {
+      background-color: #d0582d;
+      color: white;
+    }
+    .form select {
+  height: 40px;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 15px;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  
+}
+.form input, .form select {
+  height: 40px;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 15px;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="flex-container">
+      <!-- Logo Section -->
+      <div class="logo">
+        <img src="{% static 'images/applogo.png' %}" alt="Application Logo">
+      </div>
+
+      <!-- Registration Form Section -->
+      <div class="login form">
+        <header>Register</header>
+        {% if form.errors %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            There was an error with your form...
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endif %}
+        <form action="{% url 'register' %}" method="POST">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="Enter your username" value="{{ form.username.value }}">
+          <input type="text" name="first_name" placeholder="Enter your first name" value="{{ form.first_name.value }}">
+          <input type="text" name="last_name" placeholder="Enter your last name" value="{{ form.last_name.value }}">
+          <input type="email" name="email" placeholder="Enter your email" value="{{ form.email.value }}">
+          <input type="password" name="password1" placeholder="Enter your password" value="{{ form.password1.value }}">
+          <input type="password" name="password2" placeholder="Confirm your password" value="{{ form.password2.value }}">
+          
+          <select name="user_type" id="id_user_type">
+            <option value="student">Student</option>
+            <option value="professor">Professor</option>
+          </select>
+
+          <div id="student-fields" style="display: none;">
+            <select name="school_year">
+              <option value="1">1ère année</option>
+              <option value="2">2ème année</option>
+              <option value="3">3ème année</option>
+            </select>
+            <select name="field">
+              <option value="1">2IA</option>
+              <option value="2">IDSIT</option>
+              <option value="3">IDF</option>
+              <option value="4">BI&A</option>
+              <option value="5">GL</option>
+              <option value="6">GD</option>
+              <option value="7">SSI</option>
+              <option value="8">SSE</option>
+            </select>
+          </div>
+
+          <div id="professor-fields" style="display: none;">
+            <select name="department">
+              <option value="1">2IA</option>
+              <option value="2">IDSIT</option>
+              <option value="3">IDF</option>
+              <option value="4">BI&A</option>
+              <option value="5">GL</option>
+              <option value="6">GD</option>
+              <option value="7">SSI</option>
+              <option value="8">SSE</option>
+            </select>
+          </div>
+
+          <input type="submit" class="btn-register" value="Submit">
+        </form>
+
+        <div class="signup">
+          <span class="signup">Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const userTypeSelect = document.getElementById('id_user_type');
+      const studentFields = document.getElementById('student-fields');
+      const professorFields = document.getElementById('professor-fields');
+
+      function toggleFields() {
+        if (userTypeSelect.value === 'student') {
+          studentFields.style.display = 'block';
+          professorFields.style.display = 'none';
+        } else if (userTypeSelect.value === 'professor') {
+          studentFields.style.display = 'none';
+          professorFields.style.display = 'block';
+        } else {
+          studentFields.style.display = 'none';
+          professorFields.style.display = 'none';
+        }
+      }
+
+      userTypeSelect.addEventListener('change', toggleFields);
+      toggleFields();  // Initial call to set the correct state on page load
+    });
+  </script>
+</body>
+</html>
+
+{% endblock %}
